@@ -1,6 +1,6 @@
 <template>
   <div class="vue-test-one__head">
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="40" height="40">
+    <VueLogo width="40" height="40" />
     <RouterLink :to="{ name: RouteNames.VUE_TEST_TWO }">
       Go To Two
     </RouterLink>
@@ -11,11 +11,12 @@
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 import { RouteNames } from '@/router'
+import VueLogo from '@/assets/logo.svg?component'
 
 export default defineComponent({
   name: `VueTestOne`,
   components: {
-    RouterLink
+    RouterLink, VueLogo
   },
   setup() {
     return {

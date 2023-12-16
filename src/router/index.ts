@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import VueTestTwo from '@/views/demo/VueTestTwo.vue'
 
 export const RouteNames = {
   VUE_TEST_ONE: `vueTestOne`,
@@ -15,8 +14,7 @@ export const routes = [
   {
     path: `/admin/vuetest/two`,
     name: RouteNames.VUE_TEST_TWO,
-    component: VueTestTwo
-    //component: () => import(`@/views/demo/VueTestTwo.vue`)
+    component: () => import(`@/views/demo/VueTestTwo.vue`)
   }
 ]
 

@@ -8,6 +8,9 @@ Volar
 ## Requirements
 - node version 18
 
+## vite-svg-loader
+- Vite plugin to load SVG files as Vue components, using SVGO for optimization.
+
 ## Project Setup
 
 ```sh
