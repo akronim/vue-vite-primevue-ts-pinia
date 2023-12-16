@@ -15,7 +15,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { RouterLink } from 'vue-router'
 import { RouteNames } from '@/router'
 import IconHeart from '@/components/icons/IconHeart.vue'
 import { useToast } from 'primevue/usetoast'
@@ -24,7 +23,7 @@ import PvToast from 'primevue/toast'
 
 export default defineComponent({
   name: `VueTestTwo`,
-  components: { RouterLink, IconHeart, PvToast, PvButton },
+  components: { IconHeart, PvToast, PvButton },
   setup() {
     const toast = useToast()
     const count = ref(0)

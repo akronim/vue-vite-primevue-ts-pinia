@@ -53,7 +53,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import { RouterLink } from 'vue-router'
 import { RouteNames } from '@/router'
 import VueLogo from '@/assets/logo.svg?component'
 import PvButton from 'primevue/button'
@@ -68,7 +67,6 @@ import { FilterMatchMode } from 'primevue/api'
 export default defineComponent({
   name: `VueTestOne`,
   components: {
-    RouterLink,
     VueLogo,
     DataTable,
     Column,
