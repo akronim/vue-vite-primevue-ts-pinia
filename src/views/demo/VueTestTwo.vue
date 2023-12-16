@@ -25,7 +25,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .count {
   margin-top: 20px;
 }

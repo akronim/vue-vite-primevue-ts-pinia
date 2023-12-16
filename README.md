@@ -11,6 +11,17 @@ Volar
 ## vite-svg-loader
 - Vite plugin to load SVG files as Vue components, using SVGO for optimization.
 
+## scss
+
+
+
+
+
+
+
+
+
+
 ## Project Setup
 
 ```sh

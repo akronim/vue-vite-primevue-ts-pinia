@@ -26,12 +26,16 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .vue-test-one__head {
   display: flex;
   justify-content: left;
   align-items: center;
   gap: 20px;
   margin-bottom: 4px;
+
+  a {
+    color: $demo-color;
+  }
 }
 </style>
