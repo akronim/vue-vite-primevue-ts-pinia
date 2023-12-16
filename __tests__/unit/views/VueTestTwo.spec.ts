@@ -4,6 +4,8 @@ import VueTestTwo from '@/views/demo/VueTestTwo.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from '@/router'
 import { h } from 'vue'
+import ToastService from 'primevue/toastservice'
+import PrimeVue from 'primevue/config'
 
 const mockRouter = createRouter({
   history: createWebHistory(),
@@ -16,7 +18,7 @@ const mockRouter = createRouter({
 describe(`VueTestTwo`, () => {
   const options = {
     global: {
-      plugins: [mockRouter]
+      plugins: [mockRouter, PrimeVue, ToastService]
     }
   }
 

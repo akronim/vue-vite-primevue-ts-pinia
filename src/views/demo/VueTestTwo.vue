@@ -6,19 +6,47 @@
     </RouterLink>
     <IconHeart />
   </div>
+  <PvToast />
+  <PvButton label="Count" @click="increaseCount" />
+  <h5 class="count">
+    {{ count }}
+  </h5>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { RouteNames } from '@/router'
 import IconHeart from '@/components/icons/IconHeart.vue'
+import { useToast } from 'primevue/usetoast'
+import PvButton from 'primevue/button'
+import PvToast from 'primevue/toast'
 
 export default defineComponent({
-  name: `VueTestOne`,
-  components: { RouterLink, IconHeart },
+  name: `VueTestTwo`,
+  components: { RouterLink, IconHeart, PvToast, PvButton },
   setup() {
+    const toast = useToast()
+    const count = ref(0)
+
+    const increaseCount = () => {
+      count.value++
+
+      if (count.value === 3) {
+        toast.add({
+          severity: `success`,
+          summary: `PrimeVue`,
+          detail: `Welcome to PrimeVue`,
+          life: 3000
+        })
+
+        count.value = 0
+      }
+    }
+
     return {
+      count,
+      increaseCount,
       RouteNames
     }
   }
