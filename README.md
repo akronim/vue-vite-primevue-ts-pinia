@@ -13,7 +13,8 @@ Volar
 
 ## scss
 
-
+## happy-dom
+- using it instead of jsdom
 
 
 
@@ -44,6 +45,12 @@ npm run build
 
 ```sh
 npm run test:unit
+```
+
+### Run Unit Tests with coverage
+
+```sh
+npm run coverage
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
