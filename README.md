@@ -1,6 +1,6 @@
 # vue-vite-primevue-ts-pinia
 
-This template should help get you started developing with Vue 3 in Vite.
+App description goes here.
 
 ## Recommended IDE Setup
 Volar
@@ -21,9 +21,6 @@ https://primevue.org/
 
 ## primeicons
 https://primevue.org/icons/
-
-
-
 
 
 ## Project Setup
@@ -60,6 +57,14 @@ npm run coverage
 
 ```sh
 npm run lint
+```
+
+## compliance of primevue components with eslint rules
+Add prefix "Pv" to a primevue component to avoid:
+1. vue/no-reserved-component-names
+2. vue/multi-word-component-names
+```ts
+import PvButton from 'primevue/button'
 ```
 
 ## forum

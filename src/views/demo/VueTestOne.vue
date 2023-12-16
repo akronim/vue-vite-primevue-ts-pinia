@@ -4,17 +4,12 @@
     <RouterLink :to="{ name: RouteNames.VUE_TEST_TWO }">
       Go To Two
     </RouterLink>
-    <img
-      src="@/assets/primevue-logo.png"
-      alt="PrimeVue Logo"
-      height="40"
-    >
+    <img src="@/assets/primevue-logo.png" alt="PrimeVue Logo" height="40">
   </div>
   <div class="dt-products-toolbar">
-    <SelectButton v-model="size" :options="sizeOptions" optionLabel="label" dataKey="label" />
     <PvButton icon="pi pi-external-link" label="Export" @click="exportCSV" />
   </div>
-  <DataTable ref="dtProductsRef" :value="products" :size="size.value" v-model:selection="selectedProducts"
+  <DataTable ref="dtProductsRef" :value="products" size="small" v-model:selection="selectedProducts"
     v-model:filters="filters" stripedRows filterDisplay="row" paginator :rows="5" :rows-per-page-options="[5, 10, 15]"
     paginator-template="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
     current-page-report-template="{first} to {last} of {totalRecords}" data-key="id" responsive-layout="scroll">
@@ -27,27 +22,27 @@
     <template #paginatorend>
       <PvButton type="button" icon="pi pi-download" text />
     </template>
-    <Column selection-mode="multiple" header-style="width: 3em" />
-    <Column field="code" header="Code">
+    <PvColumn selection-mode="multiple" header-style="width: 3em" />
+    <PvColumn field="code" header="Code">
       <template #filter="{ filterModel, filterCallback }">
         <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
       </template>
-    </Column>
-    <Column field="name" header="Name" sortable>
+    </PvColumn>
+    <PvColumn field="name" header="Name" sortable>
       <template #filter="{ filterModel, filterCallback }">
         <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
       </template>
-    </Column>
-    <Column field="category" header="Category" sortable>
+    </PvColumn>
+    <PvColumn field="category" header="Category" sortable>
       <template #filter="{ filterModel, filterCallback }">
         <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" />
       </template>
-    </Column>
-    <Column field="quantity" header="Quantity" sortable>
+    </PvColumn>
+    <PvColumn field="quantity" header="Quantity" sortable>
       <template #filter="{ filterModel, filterCallback }">
         <InputText v-model="filterModel.value" type="number" @input="filterCallback()" class="p-column-filter" />
       </template>
-    </Column>
+    </PvColumn>
   </DataTable>
 </template>
 
@@ -57,9 +52,8 @@ import { RouteNames } from '@/router'
 import VueLogo from '@/assets/logo.svg?component'
 import PvButton from 'primevue/button'
 import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
+import PvColumn from 'primevue/column'
 import InputText from 'primevue/inputtext'
-import SelectButton from 'primevue/selectbutton'
 // 'Product' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.ts(1484)
 import { type Product, mockProducts } from '@/models/demoProduct'
 import { FilterMatchMode } from 'primevue/api'
@@ -69,10 +63,9 @@ export default defineComponent({
   components: {
     VueLogo,
     DataTable,
-    Column,
+    PvColumn,
     PvButton,
-    InputText,
-    SelectButton
+    InputText
   },
   setup() {
     const products = ref<Product[]>(mockProducts)
@@ -96,22 +89,13 @@ export default defineComponent({
       dtProductsRef.value.exportCSV();
     };
 
-    const size = ref({ label: 'Normal', value: undefined });
-    const sizeOptions = ref([
-      { label: 'Small', value: 'small' },
-      { label: 'Normal', value: undefined },
-      { label: 'Large', value: 'large' }
-    ]);
-
     return {
       RouteNames,
       products,
       selectedProducts,
       filters,
       dtProductsRef,
-      exportCSV, 
-      size, 
-      sizeOptions
+      exportCSV
     }
   }
 })
@@ -132,7 +116,7 @@ export default defineComponent({
 
 .dt-products-toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
 }
 </style>
