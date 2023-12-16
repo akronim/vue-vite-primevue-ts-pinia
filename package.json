@@ -1,6 +1,9 @@
 {
   "name": "vue-vite-primevue-ts-pinia",
   "version": "0.0.0",
+  "engines": {
+    "node": "18.x"
+  },
   "private": true,
   "type": "module",
   "scripts": {
