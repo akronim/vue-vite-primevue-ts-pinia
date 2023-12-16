@@ -16,8 +16,11 @@ Volar
 ## happy-dom
 - using it instead of jsdom
 
+## primevue
+https://primevue.org/
 
-
+## primeicons
+https://primevue.org/icons/
 
 
 
