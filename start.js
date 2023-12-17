@@ -1,5 +1,7 @@
 import inquirer from 'inquirer';
 import { createServer } from 'vite';
+import process from 'process';
+import figlet from 'figlet';
 
 const aTest = 'a-test';
 const bTest = 'b-test';
@@ -26,7 +28,15 @@ const apiUrls = {
   [fTest]: 'https://api.f-test.com'
 };
 
+const greenColor = '\x1b[32m';
+const resetColor = '\x1b[0m';
+
 async function run() {
+  const figletTxt = 
+    figlet.textSync('Vue Admin', { font: 'ANSI Shadow', horizontalLayout: 'full' });
+  const coloredText = `${greenColor}${figletTxt}${resetColor}`;
+  console.log(coloredText);
+
   const { country } = await inquirer.prompt([
     {
       type: 'list',

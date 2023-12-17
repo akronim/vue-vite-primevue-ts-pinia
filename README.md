@@ -28,6 +28,8 @@ https://primevue.org/icons/
 
 ## inquirer
 
+## figlet
+
 
 ## mocking
 https://vitest.dev/guide/mocking.html
