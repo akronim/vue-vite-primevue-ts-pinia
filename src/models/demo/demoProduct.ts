@@ -1,12 +1,12 @@
-export interface Product {
-  id: number;
+export interface DemoProduct {
+  id: number; // TODO - change to string
   code: string;
   name: string;
   category: string;
   quantity: number;
 }
 
-export const mockProducts: Product[] = [
+export const mockProducts: DemoProduct[] = [
   { id: 1, code: 'a1b2c3d4e5', name: 'Smartphone X', category: 'Electronics', quantity: 10 },
   { id: 2, code: 'f6g7h8i9j0', name: 'Leather Jacket', category: 'Clothing', quantity: 20 },
   { id: 3, code: 'k1l2m3n4o5', name: 'Kitchen Blender Pro', category: 'Home & Kitchen', quantity: 15 },

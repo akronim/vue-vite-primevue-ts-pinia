@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch, onMounted } from 'vue'
 import { RouteNames } from '@/router'
 import VueLogo from '@/assets/logo.svg?component'
 import PvButton from 'primevue/button'
@@ -55,8 +55,9 @@ import DataTable from 'primevue/datatable'
 import PvColumn from 'primevue/column'
 import InputText from 'primevue/inputtext'
 // 'Product' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.ts(1484)
-import { type Product, mockProducts } from '@/models/demoProduct'
+import { type DemoProduct, mockProducts } from '@/models/demo/demoProduct'
 import { FilterMatchMode } from 'primevue/api'
+import * as ProductService from '@/services/demo/demoProductService'
 
 export default defineComponent({
   name: `VueTestOne`,
@@ -68,7 +69,7 @@ export default defineComponent({
     InputText
   },
   setup() {
-    const products = ref<Product[]>(mockProducts)
+    const products = ref<DemoProduct[]>([])
     const selectedProducts = ref([])
     const dtProductsRef = ref()
 
@@ -80,7 +81,7 @@ export default defineComponent({
       quantity: { value: null, matchMode: FilterMatchMode.EQUALS },
     }))
 
-    watch(() => [...selectedProducts.value], (newValues: Product[], oldValues: Product[]) => {
+    watch(() => [...selectedProducts.value], (newValues: DemoProduct[], oldValues: DemoProduct[]) => {
       console.log('New Value:', newValues?.length);
       console.log('Old Value:', oldValues?.length);
     });
@@ -88,6 +89,14 @@ export default defineComponent({
     const exportCSV = () => {
       dtProductsRef.value.exportCSV();
     };
+
+    onMounted(async () => {
+      products.value = await ProductService.getAllProducts()
+
+      if (!products?.value?.length) {
+        products.value = mockProducts
+      }
+    })
 
     return {
       RouteNames,

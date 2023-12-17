@@ -1,0 +1,3 @@
+<template>
+    Edit Product
+</template>

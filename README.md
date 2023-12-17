@@ -8,6 +8,12 @@ Volar
 ## Requirements
 - node version 18
 
+## primevue
+https://primevue.org/
+
+## primeicons
+https://primevue.org/icons/
+
 ## vite-svg-loader
 - Vite plugin to load SVG files as Vue components, using SVGO for optimization.
 
@@ -16,11 +22,13 @@ Volar
 ## happy-dom
 - using it instead of jsdom
 
-## primevue
-https://primevue.org/
+## axios
 
-## primeicons
-https://primevue.org/icons/
+## uuid
+
+
+## mocking
+https://vitest.dev/guide/mocking.html
 
 
 ## Project Setup
@@ -134,4 +142,19 @@ export default function registerGlobalComponents(app: App): void {
 ### main.ts
 ```ts
 registerGlobalComponents(app)
+```
+
+
+
+```ts
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://www.jourgeois.com/",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
+      open: true, //Auto Open new window
+    },
 ```
