@@ -5,11 +5,11 @@ import { logApiError } from '@/utils/error'
 
 const endpoint = `/vuetest-one/api/products`
 
-const { PROD } = import.meta.env
+const { PROD, VITE_API_BASE_URL_DEV_ONLY } = import.meta.env
 
-const BASE_URL = PROD ? `/` : "/some-url"
+const BASE_URL = PROD ? `/` : VITE_API_BASE_URL_DEV_ONLY
 
-const axiosInstance = axios.create({ 
+const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Accept': `application/json`,
@@ -59,7 +59,7 @@ export const deleteProduct = async (id: number): Promise<boolean> => {
   try {
     const response = await axiosInstance.delete(`${endpoint}/${id}`)
     return response.data
-  } catch (error) { 
+  } catch (error) {
     logApiError(error, { fn: "deleteProduct" })
     return false
   }

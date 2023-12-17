@@ -26,6 +26,8 @@ https://primevue.org/icons/
 
 ## uuid
 
+## inquirer
+
 
 ## mocking
 https://vitest.dev/guide/mocking.html
@@ -144,8 +146,6 @@ export default function registerGlobalComponents(app: App): void {
 registerGlobalComponents(app)
 ```
 
-
-
 ```ts
     server: {
       proxy: {
@@ -158,3 +158,6 @@ registerGlobalComponents(app)
       open: true, //Auto Open new window
     },
 ```
+
+## env issues
+https://dev.to/boostup/uncaught-referenceerror-process-is-not-defined-12kg
