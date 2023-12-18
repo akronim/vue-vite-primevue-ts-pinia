@@ -22,4 +22,4 @@ app.use(PrimeVue, primeVueConfig)
 app.use(ToastService)
 // primevue - END
 
-app.mount('#app')
+app.mount(`#app`)

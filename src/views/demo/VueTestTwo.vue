@@ -1,13 +1,22 @@
 <template>
   <div class="vue-test-two__head">
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="40" height="40">
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="@/assets/logo.svg"
+      width="40"
+      height="40"
+    >
     <RouterLink :to="{ name: RouteNames.VUE_TEST_ONE }">
       Go To One
     </RouterLink>
     <IconHeart />
   </div>
   <PvToast />
-  <PvButton label="Count" @click="increaseCount" />
+  <PvButton
+    label="Count"
+    @click="increaseCount"
+  />
   <h5 class="count">
     {{ count }}
   </h5>

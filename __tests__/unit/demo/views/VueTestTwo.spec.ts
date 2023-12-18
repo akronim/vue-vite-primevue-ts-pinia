@@ -32,7 +32,7 @@ describe(`VueTestTwo`, () => {
     expect(wrapper.isVisible()).toBeTruthy()
   })
 
-  it('snapshot UI testing', () => {
+  it(`snapshot UI testing`, () => {
     expect(wrapper.text()).toMatchSnapshot()
   })
 })

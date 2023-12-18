@@ -7,14 +7,14 @@ export default mergeConfig(
   defineConfig({
     test: {
       globals: true,
-      environment: 'happy-dom',
+      environment: `happy-dom`,
       setupFiles: [
         `__tests__/setup.ts`
       ],
-      exclude: [...configDefaults.exclude, 'e2e/*'],
-      root: fileURLToPath(new URL('./', import.meta.url)),
+      exclude: [...configDefaults.exclude, `e2e/*`],
+      root: fileURLToPath(new URL(`./`, import.meta.url)),
       coverage: {
-        provider: 'istanbul',
+        provider: `istanbul`,
         all: true,
         include: [
           `src/**/components/**/*.vue`,
@@ -23,12 +23,12 @@ export default mergeConfig(
           `src/**/utils/**/*.ts`,
           `src/**/composables/**/*.ts`,
           `src/**/stores/**/*.ts`,
-          `src/**/router/**/*.ts`,
+          `src/**/router/**/*.ts`
           // add the rest as it is created
         ],
         reportsDirectory: `coverage`,
         reporter: [`text`]
-      },
+      }
     }
   })
 )

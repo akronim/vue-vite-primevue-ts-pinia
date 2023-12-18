@@ -60,7 +60,7 @@ export const deleteProduct = async (id: number): Promise<boolean> => {
     const response = await axiosInstance.delete(`${endpoint}/${id}`)
     return response.data
   } catch (error) {
-    logApiError(error, { fn: "deleteProduct" })
+    logApiError(error, { fn: `deleteProduct` })
     return false
   }
 }

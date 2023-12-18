@@ -7,18 +7,18 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [
     vue(),
-    svgLoader({ defaultImport: 'url' })
+    svgLoader({ defaultImport: `url` })
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL(`./src`, import.meta.url))
     }
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `$demo-color: ${new Date().getMinutes() % 2 === 0 ? "crimson" : "royalblue"};`
+        additionalData: `$demo-color: ${new Date().getMinutes() % 2 === 0 ? `crimson` : `royalblue`};`
       }
     }
-  },
+  }
 })

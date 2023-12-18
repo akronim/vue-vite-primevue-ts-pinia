@@ -1,2 +1,2 @@
 interface Window { }
-declare let window: Window;
+declare let window: Window

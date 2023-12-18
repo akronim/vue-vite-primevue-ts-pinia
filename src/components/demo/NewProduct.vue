@@ -1,3 +1,3 @@
 <template>
-    New Product
+  New Product
 </template>
