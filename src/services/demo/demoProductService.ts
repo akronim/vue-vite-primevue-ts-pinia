@@ -1,4 +1,4 @@
-import type { DemoProduct } from '@/models/demo/demoProduct'
+import { mockProducts, type DemoProduct } from '@/models/demo/demoProduct'
 import { attachInterceptors } from '../axiosInterceptors'
 import axios from 'axios'
 import { logApiError } from '@/utils/error'
@@ -21,17 +21,19 @@ attachInterceptors(axiosInstance)
 
 export const getAllProducts = async (): Promise<DemoProduct[]> => {
   try {
-    const response = await axiosInstance.get<DemoProduct[]>(endpoint)
-    return response.data
+    // const response = await axiosInstance.get<DemoProduct[]>(endpoint)
+    // return response.data
+    return mockProducts // TODO remove !!!
   } catch (error) {
     return []
   }
 }
 
-export const getProductById = async (id: number): Promise<DemoProduct> => {
+export const getProductById = async (id: number): Promise<DemoProduct | undefined> => {
   try {
-    const response = await axiosInstance.get<DemoProduct>(`${endpoint}/${id}`)
-    return response.data
+    // const response = await axiosInstance.get<DemoProduct>(`${endpoint}/${id}`)
+    // return response.data
+    return mockProducts.find(p => p.id === id) // TODO remove !!!
   } catch (error) {
     return {} as DemoProduct
   }

@@ -13,169 +13,48 @@
       height="40"
     >
   </div>
-  <div class="dt-products-toolbar">
-    <PvButton
-      icon="pi pi-external-link"
-      label="Export"
-      @click="exportCSV"
-    />
-  </div>
-  <DataTable
-    ref="dtProductsRef"
-    v-model:selection="selectedProducts"
-    v-model:filters="filters"
-    :value="products"
-    size="small"
-    striped-rows
-    filter-display="row"
-    paginator
-    :rows="5"
-    :rows-per-page-options="[5, 10, 15]"
-    paginator-template="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-    current-page-report-template="{first} to {last} of {totalRecords}"
-    data-key="id"
-    responsive-layout="scroll"
-  >
-    <template #empty>
-      No Data Found.
-    </template>
-    <template #paginatorstart>
-      <PvButton
-        type="button"
-        icon="pi pi-refresh"
-        text
-      />
-    </template>
-    <template #paginatorend>
-      <PvButton
-        type="button"
-        icon="pi pi-download"
-        text
-      />
-    </template>
-    <PvColumn
-      selection-mode="multiple"
-      header-style="width: 3em"
-    />
-    <PvColumn
-      field="code"
-      header="Code"
-    >
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          v-model="filterModel.value"
-          type="text"
-          class="p-column-filter"
-          @input="filterCallback()"
-        />
-      </template>
-    </PvColumn>
-    <PvColumn
-      field="name"
-      header="Name"
-      sortable
-    >
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          v-model="filterModel.value"
-          type="text"
-          class="p-column-filter"
-          @input="filterCallback()"
-        />
-      </template>
-    </PvColumn>
-    <PvColumn
-      field="category"
-      header="Category"
-      sortable
-    >
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          v-model="filterModel.value"
-          type="text"
-          class="p-column-filter"
-          @input="filterCallback()"
-        />
-      </template>
-    </PvColumn>
-    <PvColumn
-      field="quantity"
-      header="Quantity"
-      sortable
-    >
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          v-model="filterModel.value"
-          type="number"
-          class="p-column-filter"
-          @input="filterCallback()"
-        />
-      </template>
-    </PvColumn>
-  </DataTable>
+  <PvButton
+    label="New"
+    icon="pi pi-plus"
+    severity="success"
+    class="mr-2"
+    @click="openNew"
+  />
+  <ProductList />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, onMounted } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import { RouteNames } from '@/router'
 import VueLogo from '@/assets/logo.svg?component'
 import PvButton from 'primevue/button'
-import DataTable from 'primevue/datatable'
-import PvColumn from 'primevue/column'
-import InputText from 'primevue/inputtext'
-// 'Product' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.ts(1484)
-import { type DemoProduct, mockProducts } from '@/models/demo/demoProduct'
-import { FilterMatchMode } from 'primevue/api'
-import * as ProductService from '@/services/demo/demoProductService'
+import ProductList from '@/components/demo/ProductList.vue'
+import { useProductsStore } from '@/stores'
 
 export default defineComponent({
   name: `VueTestOne`,
   components: {
     VueLogo,
-    DataTable,
-    PvColumn,
-    PvButton,
-    InputText
+    ProductList,
+    PvButton
   },
   setup() {
-    const products = ref<DemoProduct[]>([])
-    const selectedProducts = ref([])
-    const dtProductsRef = ref()
 
-    const filters = ref(({
-      global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      code: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-      name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      category: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      quantity: { value: null, matchMode: FilterMatchMode.EQUALS }
-    }))
+    const productsStore = useProductsStore()
+    const { fetchAllProducts } = productsStore
 
-    watch(() => [...selectedProducts.value], (newValues: DemoProduct[], oldValues: DemoProduct[]) => {
+    const openNew = () => {
       // eslint-disable-next-line
-      console.log(`New Value:`, newValues?.length)
-      // eslint-disable-next-line
-      console.log(`Old Value:`, oldValues?.length)
-    })
-
-    const exportCSV = () => {
-      dtProductsRef.value.exportCSV()
+      console.log("TODO")
     }
 
     onMounted(async () => {
-      products.value = await ProductService.getAllProducts()
-
-      if (!products?.value?.length) {
-        products.value = mockProducts
-      }
+      await fetchAllProducts()
     })
 
     return {
       RouteNames,
-      products,
-      selectedProducts,
-      filters,
-      dtProductsRef,
-      exportCSV
+      openNew
     }
   }
 })

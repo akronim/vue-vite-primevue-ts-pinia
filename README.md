@@ -34,6 +34,9 @@ https://primevue.org/icons/
 ## mocking
 https://vitest.dev/guide/mocking.html
 
+## pinia testing
+https://pinia.vuejs.org/cookbook/testing.html
+
 
 ## Project Setup
 

@@ -6,24 +6,42 @@ export const useProductsStore = defineStore(`products`, {
   state: () => ({
     products: [] as DemoProduct[],
     productToEditId: -1,
-    productToEdit: {} as DemoProduct,
+    productToEdit: {} as DemoProduct | undefined,
     productToDeleteId: -1
   }),
 
+  getters: {
+    getAllProducts(): DemoProduct[] {
+      return this.products
+    },
+
+    getProductToEdit(): DemoProduct | undefined {
+      return this.productToEdit
+    },
+
+    getProductToEditId(): number {
+      return this.productToEditId
+    },
+
+    getProductToDeleteId(): number {
+      return this.productToDeleteId
+    }
+  },
+
   actions: {
-    async getAllProducts() {
+    async fetchAllProducts() {
       this.products = await productService.getAllProducts()
     },
 
-    async getProductToEdit(id: number) {
+    async fetchProductToEdit(id: number) {
       this.productToEdit = await productService.getProductById(id)
     },
 
-    async setProductToEditId(id: number) {
+    setProductToEditId(id: number) {
       this.productToEditId = id
     },
 
-    async setProductToDeleteId(id: number) {
+    setProductToDeleteId(id: number) {
       this.productToDeleteId = id
     }
   }
