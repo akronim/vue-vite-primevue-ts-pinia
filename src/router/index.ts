@@ -1,20 +1,20 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteComponent, type RouteRecordRaw } from 'vue-router'
 
 export const RouteNames = {
   VUE_TEST_ONE: `vueTestOne`,
   VUE_TEST_TWO: `vueTestTwo`
 }
 
-export const routes = [
+export const routes: RouteRecordRaw[] = [
   {
     path: `/admin/vuetest/one`,
     name: RouteNames.VUE_TEST_ONE,
-    component: (): any => import(`@/views/demo/VueTestOne.vue`)
+    component: (): Promise<RouteComponent> => import(`@/views/demo/VueTestOne.vue`)
   },
   {
     path: `/admin/vuetest/two`,
     name: RouteNames.VUE_TEST_TWO,
-    component: () => import(`@/views/demo/VueTestTwo.vue`)
+    component: (): Promise<RouteComponent> => import(`@/views/demo/VueTestTwo.vue`)
   }
 ]
 

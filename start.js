@@ -29,13 +29,18 @@ const apiUrls = {
 }
 
 const greenColor = `\x1b[32m`
-const resetColor = `\x1b[0m`
+
+function logWithColor(text, colorCode = ``) {
+  const resetColor = `\x1b[0m`
+  const coloredText = `${colorCode}${text}${resetColor}`
+  // eslint-disable-next-line
+  console.log(coloredText);
+}
 
 async function run() {
-  const figletTxt = 
+  const figletTxt =
     figlet.textSync(`Vue Admin`, { font: `ANSI Shadow`, horizontalLayout: `full` })
-  const coloredText = `${greenColor}${figletTxt}${resetColor}`
-  console.log(coloredText)
+  logWithColor(figletTxt, greenColor)
 
   const { country } = await inquirer.prompt([
     {
@@ -49,7 +54,7 @@ async function run() {
   try {
     await startVite(country)
   } catch (error) {
-    console.error(`Error: ${error.message}`)
+    logWithColor(`Error: ${error.message}`)
   }
 }
 
@@ -66,15 +71,15 @@ async function startVite(country) {
     })
 
     await server.listen()
-    console.log(`Server started with COUNTRY=${country}\n`)
+    logWithColor(`Server started with COUNTRY=${country}\n`)
     server.printUrls()
 
     process.on(`SIGINT`, () => {
-      console.log(`\nStopping the process...`)
+      logWithColor(`\nStopping the process...`)
       process.exit(0)
     })
   } catch (error) {
-    console.error(`Failed to start server: ${error.message}`)
+    logWithColor(`Failed to start server: ${error.message}`)
   }
 }
 

@@ -151,7 +151,9 @@ export default defineComponent({
     }))
 
     watch(() => [...selectedProducts.value], (newValues: DemoProduct[], oldValues: DemoProduct[]) => {
+      // eslint-disable-next-line
       console.log(`New Value:`, newValues?.length)
+      // eslint-disable-next-line
       console.log(`Old Value:`, oldValues?.length)
     })
 

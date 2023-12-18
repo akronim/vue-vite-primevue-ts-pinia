@@ -22,7 +22,7 @@ describe(`VueTestTwo`, () => {
     }
   }
 
-  let wrapper: VueWrapper<any>
+  let wrapper: VueWrapper
 
   beforeEach(async () => {
     wrapper = mount(VueTestTwo, options)
