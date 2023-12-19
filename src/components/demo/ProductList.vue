@@ -1,4 +1,11 @@
 <template>
+  <PvButton
+    label="New"
+    icon="pi pi-plus"
+    severity="success"
+    class="mr-2"
+    @click="openNew"
+  />
   <DataTable
     ref="dtProductsRef"
     v-model:selection="selectedProducts"
@@ -98,16 +105,46 @@
       <template #body="{ data }">
         <PvButton
           icon="pi pi-pencil"
+          class="mr-1"
           @click="editProduct(data)"
         />
         <PvButton
           icon="pi pi-trash"
           class="p-button-danger"
-          @click="deleteProduct(data)"
+          @click="confirmDeleteProduct(data)"
         />
       </template>
     </PvColumn>
   </DataTable>
+  <PvDialog
+    v-model:visible="deleteProductDialog"
+    :style="{width: '450px'}"
+    header="Confirm"
+    :modal="true"
+  >
+    <div class="confirmation-content">
+      <i
+        class="pi pi-exclamation-triangle mr-3"
+        style="font-size: 2rem"
+      />
+      <span v-if="productToDelete">Are you sure you want to delete <b>{{ productToDelete.name }}</b>?</span>
+    </div>
+    <template #footer>
+      <PvButton
+        label="No"
+        icon="pi pi-times"
+        text
+        @click="deleteProductDialog = false"
+      />
+      <PvButton
+        label="Yes"
+        icon="pi pi-check"
+        text
+        @click="deleteProduct(productToDelete)"
+      />
+    </template>
+  </PvDialog>
+  <PvToast />
 </template>
 
 <script lang="ts">
@@ -122,6 +159,9 @@ import { type DemoProduct } from '@/models/demo/demoProduct'
 import { FilterMatchMode } from 'primevue/api'
 import { useProductsStore } from '@/stores'
 import { storeToRefs } from 'pinia'
+import PvDialog from 'primevue/dialog'
+import { useToast } from 'primevue/usetoast'
+import PvToast from 'primevue/toast'
 
 export default defineComponent({
   name: `DemoProducts`,
@@ -129,16 +169,21 @@ export default defineComponent({
     DataTable,
     PvColumn,
     PvButton,
-    InputText
+    InputText,
+    PvDialog,
+    PvToast
   },
   setup() {
     const productsStore = useProductsStore()
-    const { fetchProductToEdit, setProductToDeleteId } = productsStore
+    const { fetchProductToEdit, setProductToDeleteId, setShowFormEdit, setShowFormNew } = productsStore
     const { getAllProducts } = storeToRefs(productsStore)
     //const products = computed(() => productsStore.getAllProducts);
 
     const selectedProducts = ref([])
+    const deleteProductDialog = ref(false)
     const dtProductsRef = ref()
+    const productToDelete = ref<DemoProduct>({} as DemoProduct)
+    const toast = useToast()
 
     const filters = ref(({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -161,10 +206,22 @@ export default defineComponent({
 
     const editProduct = async (product: DemoProduct) => {
       await fetchProductToEdit(product.id)
+      setShowFormEdit(true)
+    }
+
+    const confirmDeleteProduct = (product: DemoProduct) => {
+      productToDelete.value = product
+      deleteProductDialog.value = true
     }
 
     const deleteProduct = (product: DemoProduct) => {
       setProductToDeleteId(product.id)
+      deleteProductDialog.value = false
+      toast.add({ severity:`success`, summary: `Successful`, detail: `Product Deleted`, life: 3000 })
+    }
+
+    const openNew = () => {
+      setShowFormNew(true)
     }
 
     return {
@@ -175,7 +232,11 @@ export default defineComponent({
       dtProductsRef,
       exportCSV,
       editProduct,
-      deleteProduct
+      deleteProductDialog,
+      confirmDeleteProduct,
+      productToDelete,
+      deleteProduct,
+      openNew
     }
   }
 })

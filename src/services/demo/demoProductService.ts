@@ -33,7 +33,7 @@ export const getProductById = async (id: string): Promise<DemoProduct | undefine
   try {
     // const response = await axiosInstance.get<DemoProduct>(`${endpoint}/${id}`)
     // return response.data
-    return mockProducts.find(p => p.id === id) // TODO remove !!!
+    return JSON.parse(JSON.stringify(mockProducts.find(p => p.id === id))) // TODO remove !!!
   } catch (error) {
     return {} as DemoProduct
   }

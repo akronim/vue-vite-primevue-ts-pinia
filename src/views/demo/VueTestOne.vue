@@ -13,40 +13,37 @@
       height="40"
     >
   </div>
-  <PvButton
-    label="New"
-    icon="pi pi-plus"
-    severity="success"
-    class="mr-2"
-    @click="openNew"
-  />
-  <ProductList />
+
+  <ProductList v-if="!showFormNew && !showFormEdit" />
+  <div class="flex justify-content-start">
+    <NewProduct v-if="showFormNew" />
+    <EditProduct v-if="showFormEdit" />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { RouteNames } from '@/router'
 import VueLogo from '@/assets/logo.svg?component'
-import PvButton from 'primevue/button'
 import ProductList from '@/components/demo/ProductList.vue'
+import NewProduct from '@/components/demo/NewProduct.vue'
 import { useProductsStore } from '@/stores'
+import { storeToRefs } from 'pinia'
+import EditProduct from '@/components/demo/EditProduct.vue'
 
 export default defineComponent({
   name: `VueTestOne`,
   components: {
     VueLogo,
     ProductList,
-    PvButton
+    NewProduct,
+    EditProduct
   },
   setup() {
 
     const productsStore = useProductsStore()
     const { fetchAllProducts } = productsStore
-
-    const openNew = () => {
-      // eslint-disable-next-line
-      console.log("TODO")
-    }
+    const { getShowFormNew, getShowFormEdit } = storeToRefs(productsStore)
 
     onMounted(async () => {
       await fetchAllProducts()
@@ -54,7 +51,8 @@ export default defineComponent({
 
     return {
       RouteNames,
-      openNew
+      showFormNew: getShowFormNew,
+      showFormEdit: getShowFormEdit
     }
   }
 })

@@ -14,6 +14,9 @@ https://primevue.org/
 ## primeicons
 https://primevue.org/icons/
 
+## primeflex
+https://primeflex.org/installation
+
 ## vite-svg-loader
 - Vite plugin to load SVG files as Vue components, using SVGO for optimization.
 

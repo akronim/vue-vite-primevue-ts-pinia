@@ -7,7 +7,9 @@ export const useProductsStore = defineStore(`products`, {
     products: [] as DemoProduct[],
     productToEditId: ``,
     productToEdit: {} as DemoProduct | undefined,
-    productToDeleteId: ``
+    productToDeleteId: ``,
+    showFormNew: false,
+    showFormEdit: false
   }),
 
   getters: {
@@ -25,6 +27,14 @@ export const useProductsStore = defineStore(`products`, {
 
     getProductToDeleteId(): string {
       return this.productToDeleteId
+    },
+
+    getShowFormNew(): boolean {
+      return this.showFormNew
+    },
+
+    getShowFormEdit(): boolean {
+      return this.showFormEdit
     }
   },
 
@@ -43,6 +53,14 @@ export const useProductsStore = defineStore(`products`, {
 
     setProductToDeleteId(id: string) {
       this.productToDeleteId = id
+    },
+
+    setShowFormNew(show: boolean) {
+      this.showFormNew = show
+    },
+
+    setShowFormEdit(show: boolean) {
+      this.showFormEdit = show
     }
   }
 })
