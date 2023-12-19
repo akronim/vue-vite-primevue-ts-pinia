@@ -29,7 +29,7 @@ export const getAllProducts = async (): Promise<DemoProduct[]> => {
   }
 }
 
-export const getProductById = async (id: number): Promise<DemoProduct | undefined> => {
+export const getProductById = async (id: string): Promise<DemoProduct | undefined> => {
   try {
     // const response = await axiosInstance.get<DemoProduct>(`${endpoint}/${id}`)
     // return response.data
@@ -48,7 +48,7 @@ export const createProduct = async (product: DemoProduct): Promise<DemoProduct> 
   }
 }
 
-export const updateProduct = async (id: number, updatedProduct: DemoProduct): Promise<DemoProduct> => {
+export const updateProduct = async (id: string, updatedProduct: DemoProduct): Promise<DemoProduct> => {
   try {
     const response = await axiosInstance.put<DemoProduct>(`${endpoint}/${id}`, updatedProduct)
     return response.data
@@ -57,7 +57,7 @@ export const updateProduct = async (id: number, updatedProduct: DemoProduct): Pr
   }
 }
 
-export const deleteProduct = async (id: number): Promise<boolean> => {
+export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
     const response = await axiosInstance.delete(`${endpoint}/${id}`)
     return response.data

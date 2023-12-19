@@ -5,9 +5,9 @@ import * as productService from '@/services/demo/demoProductService'
 export const useProductsStore = defineStore(`products`, {
   state: () => ({
     products: [] as DemoProduct[],
-    productToEditId: -1,
+    productToEditId: ``,
     productToEdit: {} as DemoProduct | undefined,
-    productToDeleteId: -1
+    productToDeleteId: ``
   }),
 
   getters: {
@@ -19,11 +19,11 @@ export const useProductsStore = defineStore(`products`, {
       return this.productToEdit
     },
 
-    getProductToEditId(): number {
+    getProductToEditId(): string {
       return this.productToEditId
     },
 
-    getProductToDeleteId(): number {
+    getProductToDeleteId(): string {
       return this.productToDeleteId
     }
   },
@@ -33,15 +33,15 @@ export const useProductsStore = defineStore(`products`, {
       this.products = await productService.getAllProducts()
     },
 
-    async fetchProductToEdit(id: number) {
+    async fetchProductToEdit(id: string) {
       this.productToEdit = await productService.getProductById(id)
     },
 
-    setProductToEditId(id: number) {
+    setProductToEditId(id: string) {
       this.productToEditId = id
     },
 
-    setProductToDeleteId(id: number) {
+    setProductToDeleteId(id: string) {
       this.productToDeleteId = id
     }
   }
