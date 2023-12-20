@@ -65,7 +65,7 @@ async function startVite(country) {
 
     const server = await createServer({
       server: {
-        port: 8080,
+        port: 5173,
         open: true
       }
     })

@@ -11,6 +11,8 @@
     v-model:selection="selectedProducts"
     v-model:filters="filters"
     :value="products"
+    sort-field="code" 
+    :sort-order="1"
     size="small"
     striped-rows
     filter-display="row"

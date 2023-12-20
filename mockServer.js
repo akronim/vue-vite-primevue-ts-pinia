@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 const app = express()
 const PORT = 3000
-const endpoint = `/vuetest-one/api/products`
+const endpoint = `/vue-api/vue-test-one/products`
 
 app.use(bodyParser.json())
 
