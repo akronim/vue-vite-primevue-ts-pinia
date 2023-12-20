@@ -3,7 +3,7 @@ import { getAllProducts } from '@/services/demo/demoProductService'
 import * as productService from '@/services/demo/demoProductService'
 import { describe, expect, it, vi } from 'vitest'
 
-export const mockProducts: DemoProduct[] = [
+const mockProducts: DemoProduct[] = [
   {
     id: `1`,
     code: `a1b2c3d4`,

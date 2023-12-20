@@ -91,6 +91,12 @@ https://github.com/orgs/primefaces/discussions
 
 
 ## TODO
+- vee-validate
+- date-fns
+- unplugin-vue-components => On-demand components auto importing for Vue
+  - https://github.com/unplugin/unplugin-vue-components
+
+
 'Product' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.ts(1484)
 
 

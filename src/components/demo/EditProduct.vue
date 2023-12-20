@@ -117,12 +117,14 @@
         label="Cancel"
         icon="pi pi-times"
         text
+        data-test-unit="productEditCancelBtn"
         @click="hideDialog"
       />
       <PvButton
         label="Save"
         icon="pi pi-check"
         text
+        data-test-unit="productEditSaveBtn"
         @click="saveProduct"
       />
     </div>
@@ -139,6 +141,7 @@ import type { DemoProduct } from '@/models/demo/demoProduct'
 import PvTextarea from 'primevue/textarea'
 import Dropdown from 'primevue/dropdown'
 import RadioButton from 'primevue/radiobutton'
+import { updateProduct } from '@/services/demo/demoProductService'
 
 export default defineComponent({
   name: `EditProduct`,
@@ -154,7 +157,7 @@ export default defineComponent({
     const productsStore = useProductsStore()
     const { getProductToEdit } = productsStore
     const product = ref<DemoProduct>()
-    const { setShowFormEdit } = productsStore
+    const { setShowFormEdit, fetchAllProducts } = productsStore
     const submitted = ref(false)
     const statuses = ref([
       { label: `IN STOCK`, value: `IN STOCK` },
@@ -162,12 +165,12 @@ export default defineComponent({
       { label: `OUT OF STOCK`, value: `OUT OF STOCK` }
     ]) 
 
-    const saveProduct = () => {
+    const saveProduct = async () => {
       submitted.value = true
-      // eslint-disable-next-line
-      console.log(`Saving product:`, product.value)
 
       if (product.value?.name?.trim()) {
+        await updateProduct(product.value)
+        await fetchAllProducts()
         hideDialog()
       }
     }

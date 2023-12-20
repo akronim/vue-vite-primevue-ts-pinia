@@ -8,7 +8,6 @@ import VueLogo from '@/assets/logo.svg?component'
 import ToastService from 'primevue/toastservice'
 import PrimeVue from 'primevue/config'
 import { createTestingPinia } from '@pinia/testing'
-//import { useProductsStore } from '@/stores/product'
 
 const mockRouter = createRouter({
   history: createWebHistory(),

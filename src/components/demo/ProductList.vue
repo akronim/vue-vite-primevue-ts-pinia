@@ -127,7 +127,7 @@
         class="pi pi-exclamation-triangle mr-3"
         style="font-size: 2rem"
       />
-      <span v-if="productToDelete">Are you sure you want to delete <b>{{ productToDelete.name }}</b>?</span>
+      <span v-if="productToDelete">{{ messages.YOU_SURE_DELETE }}</span>
     </div>
     <template #footer>
       <PvButton
@@ -140,7 +140,7 @@
         label="Yes"
         icon="pi pi-check"
         text
-        @click="deleteProduct(productToDelete)"
+        @click="deleteProductItem"
       />
     </template>
   </PvDialog>
@@ -154,7 +154,6 @@ import PvButton from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import PvColumn from 'primevue/column'
 import InputText from 'primevue/inputtext'
-// 'Product' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.ts(1484)
 import { type DemoProduct } from '@/models/demo/demoProduct'
 import { FilterMatchMode } from 'primevue/api'
 import { useProductsStore } from '@/stores'
@@ -162,6 +161,8 @@ import { storeToRefs } from 'pinia'
 import PvDialog from 'primevue/dialog'
 import { useToast } from 'primevue/usetoast'
 import PvToast from 'primevue/toast'
+import { messages } from '@/constants/messages'
+import { deleteProduct } from '@/services/demo/demoProductService'
 
 export default defineComponent({
   name: `DemoProducts`,
@@ -175,7 +176,9 @@ export default defineComponent({
   },
   setup() {
     const productsStore = useProductsStore()
-    const { fetchProductToEdit, setProductToDeleteId, setShowFormEdit, setShowFormNew } = productsStore
+    const { 
+      fetchProductToEdit, setShowFormEdit, setShowFormNew, fetchAllProducts 
+    } = productsStore
     const { getAllProducts } = storeToRefs(productsStore)
     //const products = computed(() => productsStore.getAllProducts);
 
@@ -200,10 +203,6 @@ export default defineComponent({
       console.log(`Old Value:`, oldValues?.length)
     })
 
-    const exportCSV = () => {
-      dtProductsRef.value.exportCSV()
-    }
-
     const editProduct = async (product: DemoProduct) => {
       await fetchProductToEdit(product.id)
       setShowFormEdit(true)
@@ -214,10 +213,13 @@ export default defineComponent({
       deleteProductDialog.value = true
     }
 
-    const deleteProduct = (product: DemoProduct) => {
-      setProductToDeleteId(product.id)
+    const deleteProductItem = async () => {
       deleteProductDialog.value = false
-      toast.add({ severity:`success`, summary: `Successful`, detail: `Product Deleted`, life: 3000 })
+      await deleteProduct(productToDelete.value.id)
+      await fetchAllProducts()
+      toast.add({ 
+        severity:`success`, summary: messages.SUCCESSFUL, detail: messages.ITEM_DELETED, life: 3000 
+      })
     }
 
     const openNew = () => {
@@ -230,13 +232,13 @@ export default defineComponent({
       selectedProducts,
       filters,
       dtProductsRef,
-      exportCSV,
       editProduct,
       deleteProductDialog,
       confirmDeleteProduct,
       productToDelete,
-      deleteProduct,
-      openNew
+      deleteProductItem,
+      openNew,
+      messages
     }
   }
 })
