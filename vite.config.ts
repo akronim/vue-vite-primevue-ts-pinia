@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  //base: `./`,
   plugins: [
     vue(),
     svgLoader({ defaultImport: `url` })
@@ -21,4 +22,16 @@ export default defineConfig({
       }
     }
   }
+  // build: {
+  //   manifest: true,
+  //   chunkSizeWarningLimit: 1024,
+  //   rollupOptions: {
+  //     output: {
+  //       dir: `dist/assets`,
+  //       entryFileNames: `[name].js`,
+  //       chunkFileNames: `[name].js`,
+  //       assetFileNames: `[name].[ext]`
+  //     }
+  //   }
+  // }
 })
