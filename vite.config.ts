@@ -1,11 +1,13 @@
 import { fileURLToPath, URL } from 'node:url'
 import svgLoader from 'vite-svg-loader'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
+const mode = process.env.NODE_ENV
+mode && (process.env = { ...process.env, ...loadEnv(mode, process.cwd()) })
+
 export default defineConfig({
-  //base: `./`,
+  base: mode === `production` ? `/static/vueadmin/dist` : `/`, 
   plugins: [
     vue(),
     svgLoader({ defaultImport: `url` })
@@ -22,16 +24,4 @@ export default defineConfig({
       }
     }
   }
-  // build: {
-  //   manifest: true,
-  //   chunkSizeWarningLimit: 1024,
-  //   rollupOptions: {
-  //     output: {
-  //       dir: `dist/assets`,
-  //       entryFileNames: `[name].js`,
-  //       chunkFileNames: `[name].js`,
-  //       assetFileNames: `[name].[ext]`
-  //     }
-  //   }
-  // }
 })

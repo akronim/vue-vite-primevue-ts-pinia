@@ -1,5 +1,5 @@
 import "primeflex/primeflex.css"
-import 'primevue/resources/themes/saga-blue/theme.css'
+import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import './assets/main.scss'
@@ -23,4 +23,9 @@ app.use(PrimeVue, primeVueConfig)
 app.use(ToastService)
 // primevue - END
 
-app.mount(`#app`)
+app.mount(`#vue-admin-app`)
+
+// eslint-disable-next-line
+console.log(window.SITE) // comes from admin itself
+// eslint-disable-next-line
+console.log(window.USER) // comes from admin itself

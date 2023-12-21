@@ -3,29 +3,29 @@ import { createServer } from 'vite'
 import process from 'process'
 import figlet from 'figlet'
 
-const aTest = `a-test`
-const bTest = `b-test`
-const cTest = `c-test`
-const dTest = `d-test`
-const eTest = `e-test`
-const fTest = `f-test`
+const czTest = `cz-test`
+// const bTest = `b-test`
+// const cTest = `c-test`
+// const dTest = `d-test`
+// const eTest = `e-test`
+// const fTest = `f-test`
 
 const choices = [
-  aTest,
-  bTest,
-  cTest,
-  dTest,
-  eTest,
-  fTest
+  czTest
+  // bTest,
+  // cTest,
+  // dTest,
+  // eTest,
+  // fTest
 ]
 
 const apiUrls = {
-  [aTest]: `https://api.a-test.com`,
-  [bTest]: `https://api.b-test.com`,
-  [cTest]: `https://api.c-test.com`,
-  [dTest]: `https://api.d-test.com`,
-  [eTest]: `https://api.e-test.com`,
-  [fTest]: `https://api.f-test.com`
+  [czTest]: `http://localhost:8080` 
+  // [bTest]: `https://api.b-test.com`,
+  // [cTest]: `https://api.c-test.com`,
+  // [dTest]: `https://api.d-test.com`,
+  // [eTest]: `https://api.e-test.com`,
+  // [fTest]: `https://api.f-test.com`
 }
 
 const greenColor = `\x1b[32m`

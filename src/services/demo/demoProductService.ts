@@ -9,7 +9,6 @@ const { PROD, VITE_API_BASE_URL_DEV_ONLY } = import.meta.env
 
 // if you wnat to use mock server, set BASE_URL to: `http://localhost:3000`
 const BASE_URL = PROD ? `/` : VITE_API_BASE_URL_DEV_ONLY
-//const BASE_URL = `http://localhost:8080` // 
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
