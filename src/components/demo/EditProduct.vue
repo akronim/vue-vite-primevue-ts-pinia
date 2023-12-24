@@ -118,7 +118,7 @@
         icon="pi pi-times"
         text
         data-test-unit="productEditCancelBtn"
-        @click="hideDialog"
+        @click="hideForm"
       />
       <PvButton
         label="Save"
@@ -171,11 +171,11 @@ export default defineComponent({
       if (product.value?.name?.trim()) {
         await updateProduct(product.value)
         await fetchAllProducts()
-        hideDialog()
+        hideForm()
       }
     }
 
-    const hideDialog = () => {
+    const hideForm = () => {
       product.value = {} as DemoProduct
       setShowFormEdit(false)
     }
@@ -190,7 +190,7 @@ export default defineComponent({
       product,
       saveProduct,
       submitted,
-      hideDialog,
+      hideForm,
       statuses
     }
   }

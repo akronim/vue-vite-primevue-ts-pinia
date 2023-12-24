@@ -67,13 +67,7 @@ export default defineComponent({
   margin-bottom: 4px;
 
   a {
-    color: $demo-color;
+    color: darkslategrey;
   }
-}
-
-.dt-products-toolbar {
-  display: flex;
-  justify-content: end;
-  align-items: center;
 }
 </style>

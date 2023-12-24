@@ -76,5 +76,9 @@ button {
   align-items: center;
   gap: 20px;
   margin-bottom: 4px;
+
+  a {
+    color: darkslategrey;
+  }
 }
 </style>
