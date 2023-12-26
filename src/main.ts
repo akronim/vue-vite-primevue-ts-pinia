@@ -23,9 +23,4 @@ app.use(PrimeVue, primeVueConfig)
 app.use(ToastService)
 // primevue - END
 
-app.mount(`#vue-admin-app`)
-
-// eslint-disable-next-line
-console.log(window.SITE) // comes from admin itself
-// eslint-disable-next-line
-console.log(window.USER) // comes from admin itself
+app.mount(`#vite-primevue-app`)

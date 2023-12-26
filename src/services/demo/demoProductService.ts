@@ -5,13 +5,10 @@ import { logApiError } from '@/utils/error'
 
 const endpoint = `/vue-api/vue-test-one/products`
 
-const { PROD, VITE_API_BASE_URL_DEV_ONLY } = import.meta.env
-
-// if you wnat to use mock server, set BASE_URL to: `http://localhost:3000`
-const BASE_URL = PROD ? `/` : VITE_API_BASE_URL_DEV_ONLY
+const API_BASE_URL = `http://localhost:3000` // mockServer.js
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Accept': `application/json`,
     'Content-Type': `application/json`

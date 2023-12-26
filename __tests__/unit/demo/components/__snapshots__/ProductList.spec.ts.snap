@@ -200,7 +200,7 @@ exports[`ProductList.vue > renders the component and matches snapshot 1`] = `
       <!---->
       <tbody class="p-datatable-tbody" role="rowgroup" data-pc-section="tbody">
         <!---->
-        <tr class="" tabindex="-1" role="row" data-pc-section="bodyrow" data-p-selectable-row="false" data-p-highlight="false">
+        <tr class="p-row-even" tabindex="-1" role="row" data-pc-section="bodyrow" data-p-index="0" data-p-selectable-row="false" data-p-highlight="false">
           <td class="p-selection-column" role="cell" data-pc-section="bodycell" data-pc-name="bodycell" data-p-selection-column="true" data-p-cell-editing="false">
             <!---->
             <div class="p-checkbox p-component" data-pc-section="checkboxwrapper">
@@ -233,7 +233,7 @@ exports[`ProductList.vue > renders the component and matches snapshot 1`] = `
         <!---->
         <!---->
         <!---->
-        <tr class="" tabindex="-1" role="row" data-pc-section="bodyrow" data-p-selectable-row="false" data-p-highlight="false">
+        <tr class="p-row-odd" tabindex="-1" role="row" data-pc-section="bodyrow" data-p-index="1" data-p-selectable-row="false" data-p-highlight="false">
           <td class="p-selection-column" role="cell" data-pc-section="bodycell" data-pc-name="bodycell" data-p-selection-column="true" data-p-cell-editing="false">
             <!---->
             <div class="p-checkbox p-component" data-pc-section="checkboxwrapper">

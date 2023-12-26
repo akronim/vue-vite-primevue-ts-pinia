@@ -7,12 +7,12 @@ export const RouteNames = {
 
 export const routes: RouteRecordRaw[] = [
   {
-    path: `/admin/vuetest/one`,
+    path: `/demo/vuetest/one`,
     name: RouteNames.VUE_TEST_ONE,
     component: (): Promise<RouteComponent> => import(`@/views/demo/VueTestOne.vue`)
   },
   {
-    path: `/admin/vuetest/two`,
+    path: `/demo/vuetest/two`,
     name: RouteNames.VUE_TEST_TWO,
     component: (): Promise<RouteComponent> => import(`@/views/demo/VueTestTwo.vue`)
   }

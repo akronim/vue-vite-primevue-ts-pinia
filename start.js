@@ -1,36 +1,7 @@
-import inquirer from 'inquirer'
 import { createServer } from 'vite'
 import process from 'process'
-import figlet from 'figlet'
 
-const czTest = `cz-test`
-// const bTest = `b-test`
-// const cTest = `c-test`
-// const dTest = `d-test`
-// const eTest = `e-test`
-// const fTest = `f-test`
-
-const choices = [
-  czTest
-  // bTest,
-  // cTest,
-  // dTest,
-  // eTest,
-  // fTest
-]
-
-const apiUrls = {
-  [czTest]: `http://localhost:8080` 
-  // [bTest]: `https://api.b-test.com`,
-  // [cTest]: `https://api.c-test.com`,
-  // [dTest]: `https://api.d-test.com`,
-  // [eTest]: `https://api.e-test.com`,
-  // [fTest]: `https://api.f-test.com`
-}
-
-const greenColor = `\x1b[32m`
-
-function logWithColor(text, colorCode = ``) {
+function logWithColor(text, colorCode = `\x1b[32m`) {
   const resetColor = `\x1b[0m`
   const coloredText = `${colorCode}${text}${resetColor}`
   // eslint-disable-next-line
@@ -38,31 +9,15 @@ function logWithColor(text, colorCode = ``) {
 }
 
 async function run() {
-  const figletTxt =
-    figlet.textSync(`Vue Admin`, { font: `ANSI Shadow`, horizontalLayout: `full` })
-  logWithColor(figletTxt, greenColor)
-
-  const { country } = await inquirer.prompt([
-    {
-      type: `list`,
-      name: `country`,
-      message: `Choose the country:`,
-      choices: choices
-    }
-  ])
-
   try {
-    await startVite(country)
+    await startVite()
   } catch (error) {
     logWithColor(`Error: ${error.message}`)
   }
 }
 
-async function startVite(country) {
+async function startVite() {
   try {
-    process.env.VITE_COUNTRY = country
-    process.env.VITE_API_BASE_URL_DEV_ONLY = apiUrls[country]
-
     const server = await createServer({
       server: {
         port: 5173,
@@ -71,7 +26,7 @@ async function startVite(country) {
     })
 
     await server.listen()
-    logWithColor(`Server started with COUNTRY=${country}\n`)
+    logWithColor(`Server started...\n`)
     server.printUrls()
 
     process.on(`SIGINT`, () => {

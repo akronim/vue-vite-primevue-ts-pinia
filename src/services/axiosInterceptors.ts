@@ -34,14 +34,23 @@ const interceptSuccessResponse = (response: AxiosResponse): AxiosResponse => {
 
 const interceptorErrorResponse = (error: unknown): Promise<unknown> => {
   if (isAxiosError(error)) {
-    const axiosError = error as AxiosError
+    const axError = error as AxiosError
+    const configInfo = axError.response ? getConfigInfo(axError.response.config) : getConfigInfo(axError.config)
+    const status = axError.response ? axError.response.status : axError.status
+
+    const logInfo: { [key: string]: unknown } = {
+      ...configInfo,
+      status: status
+    }
+
+    if (axError.response) {
+      logInfo.body = axError.response.data
+    } else {
+      logInfo.message = axError.message
+    }
 
     // eslint-disable-next-line
-    console.log(`API Response Failure`, {
-      ...getConfigInfo(axiosError.response?.config),
-      status: axiosError.response?.status,
-      body: axiosError.response?.data
-    })
+    console.log(`API Response Failure`, logInfo);
   }
 
   return Promise.reject(error)
