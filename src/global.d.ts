@@ -1,5 +1,4 @@
 interface Window { 
-    SITE: string;
-    USER: string;
+    //SOME_KEY: string
 }
 declare let window: Window
