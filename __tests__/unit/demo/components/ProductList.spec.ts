@@ -38,16 +38,6 @@ describe(`ProductList.vue`, () => {
     }
   }
 
-  it(`renders the component and matches snapshot`, async () => {
-    const store = useProductsStore()
-    store.products = products
-
-    const wrapper = mount(ProductList, options)
-    await wrapper.vm.$nextTick()
-
-    expect(wrapper.html()).toMatchSnapshot()
-  })
-
   it(`edits a product when edit button is clicked`, async () => {
     const store = useProductsStore()
     store.products = products

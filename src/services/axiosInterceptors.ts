@@ -5,7 +5,7 @@ import {
 } from "axios"
 import { v4 as uuidv4 } from 'uuid'
 
-type AxiosConfigWithMetadata = InternalAxiosRequestConfig & {
+export type AxiosConfigWithMetadata = InternalAxiosRequestConfig & {
   metadata?: {
     axiosId: string
   }
@@ -13,7 +13,7 @@ type AxiosConfigWithMetadata = InternalAxiosRequestConfig & {
 
 type ConfigInfo = Partial<AxiosConfigWithMetadata> & { axiosId?: string };
 
-const interceptRequest = (config: AxiosConfigWithMetadata): AxiosConfigWithMetadata => {
+export const interceptRequest = (config: AxiosConfigWithMetadata): AxiosConfigWithMetadata => {
   const axiosId = uuidv4()
   config.metadata = { axiosId }
   // eslint-disable-next-line
@@ -21,7 +21,7 @@ const interceptRequest = (config: AxiosConfigWithMetadata): AxiosConfigWithMetad
   return config
 }
 
-const interceptSuccessResponse = (response: AxiosResponse): AxiosResponse => {
+export const interceptSuccessResponse = (response: AxiosResponse): AxiosResponse => {
   // eslint-disable-next-line
   console.log(`API Response Success`, {
     ...getConfigInfo(response.config),
@@ -32,7 +32,7 @@ const interceptSuccessResponse = (response: AxiosResponse): AxiosResponse => {
   return response
 }
 
-const interceptorErrorResponse = (error: unknown): Promise<unknown> => {
+export const interceptorErrorResponse = (error: unknown): Promise<unknown> => {
   if (isAxiosError(error)) {
     const axError = error as AxiosError
     const configInfo = axError.response ? getConfigInfo(axError.response.config) : getConfigInfo(axError.config)

@@ -4,7 +4,10 @@
       width="40"
       height="40"
     />
-    <RouterLink :to="{ name: RouteNames.VUE_TEST_TWO }">
+    <RouterLink
+      :to="{ name: RouteNames.VUE_TEST_TWO }"
+      data-test-unit="goToTwoLink"
+    >
       Go To Two
     </RouterLink>
     <img

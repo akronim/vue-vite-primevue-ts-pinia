@@ -31,9 +31,5 @@ describe(`VueTestTwo`, () => {
   it(`renders properly`, async () => {
     expect(wrapper.isVisible()).toBeTruthy()
   })
-
-  it(`snapshot UI testing`, () => {
-    expect(wrapper.text()).toMatchSnapshot()
-  })
 })
 

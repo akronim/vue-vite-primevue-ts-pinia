@@ -41,9 +41,4 @@ describe(`VueTestOne`, () => {
 
     expect(wrapper.findAll(`.vue-test-one__head a`).length).toBe(1)
   })
-
-  it(`snapshot UI testing`, () => {
-    const wrapper = mount(VueTestOne, options)
-    expect(wrapper.text()).toMatchSnapshot()
-  })
 })

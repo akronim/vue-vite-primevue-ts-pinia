@@ -33,11 +33,49 @@ describe(`Product Service`, () => {
     expect(products).toEqual(mockProducts)
   })
 
-
   it(`should return an empty arr`, async () => {
     vi.spyOn(productService, `getAllProducts`).mockImplementationOnce(() => Promise.resolve([]))
     const products = await getAllProducts()
     expect(products).toEqual([])
+  })
+
+  it(`should get a product by id successfully`, async () => {
+    const mockProduct = mockProducts[0]
+    vi.spyOn(productService, `getProductById`).mockImplementationOnce(() => Promise.resolve(mockProduct))
+    const product = await productService.getProductById(`1`)
+    expect(product).toEqual(mockProduct)
+  })
+
+  it(`should handle error in getProductById`, async () => {
+    vi.spyOn(productService, `getProductById`)
+      .mockImplementationOnce(() => Promise.reject(new Error(`Error fetching product`)))
+    let product
+    try {
+      product = await productService.getProductById(`1`)
+    } catch (error) {
+      product = {} as DemoProduct
+    }
+    expect(product).toEqual({} as DemoProduct)
+  })
+  
+  it(`should create a product successfully`, async () => {
+    const mockProduct = mockProducts[0]
+    vi.spyOn(productService, `createProduct`).mockImplementationOnce(() => Promise.resolve(mockProduct))
+    const product = await productService.createProduct(mockProduct)
+    expect(product).toEqual(mockProduct)
+  })
+
+  it(`should update a product successfully`, async () => {
+    const mockProduct = { ...mockProducts[0], name: `Updated Product` }
+    vi.spyOn(productService, `updateProduct`).mockImplementationOnce(() => Promise.resolve(mockProduct))
+    const product = await productService.updateProduct(mockProduct)
+    expect(product).toEqual(mockProduct)
+  })
+
+  it(`should delete a product successfully`, async () => {
+    vi.spyOn(productService, `deleteProduct`).mockImplementationOnce(() => Promise.resolve(true))
+    const result = await productService.deleteProduct(`1`)
+    expect(result).toBe(true)
   })
 })
 

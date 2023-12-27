@@ -7,7 +7,10 @@
       width="40"
       height="40"
     >
-    <RouterLink :to="{ name: RouteNames.VUE_TEST_ONE }">
+    <RouterLink
+      :to="{ name: RouteNames.VUE_TEST_ONE }"
+      data-test-unit="goToOneLink"
+    >
       Go To One
     </RouterLink>
     <IconHeart />

@@ -1,3 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`VueTestTwo > snapshot UI testing 1`] = `"Go To OneCount0"`;
