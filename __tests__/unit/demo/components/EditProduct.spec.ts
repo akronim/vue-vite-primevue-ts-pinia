@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import EditProduct from '@/components/demo/EditProduct.vue'
 import { describe, expect, it, vi } from 'vitest'
 import { createTestingPinia } from '@pinia/testing'
@@ -27,17 +27,7 @@ describe(`EditProduct.vue`, () => {
   it(`renders form correctly`, async () => {
     const wrapper = mount(EditProduct, options)
     await wrapper.vm.$nextTick()
-
     expect(wrapper.find(`form`).exists()).toBe(true)
-    expect(wrapper.find(`#code`).exists()).toBe(true)
-  })
-
-  it(`submits the form`, async () => {
-    const wrapper = mount(EditProduct, options)
-    await wrapper.vm.$nextTick()
-    //await wrapper.vm.saveProduct(); would work too
-    await wrapper.find(`[data-test-unit="productEditSaveBtn"]`).trigger(`click`)
-    expect(wrapper.vm.submitted).toBe(true)
   })
 
   it(`cancels and hides the form on button click`, async () => {
@@ -52,7 +42,7 @@ describe(`EditProduct.vue`, () => {
     expect(store.showFormEdit).toBe(false)
   })
 
-  it(`saves product on button click`, async () => {
+  it(`saves product - valid data`, async () => {
     vi.spyOn(productService, `updateProduct`).mockReturnValue(Promise.resolve({} as DemoProduct))
 
     const store = useProductsStore()
@@ -65,29 +55,34 @@ describe(`EditProduct.vue`, () => {
       wrapper.vm.product.category = `foo`
     }
 
-    await wrapper.find(`[data-test-unit="productEditSaveBtn"]`).trigger(`click`)
+    await wrapper.vm.saveProduct() 
+    await flushPromises()
 
     expect(productService.updateProduct).toHaveBeenCalled()
     expect(productService.updateProduct).toHaveBeenCalledWith(productToEdit)
-
-    expect(wrapper.vm.submitted).toBe(true)
+    expect(wrapper.vm.errors).toEqual({})
   })
 
-  it(`does not save product on button click with invalid data`, async () => {
+  it(`does not save product - invalid data`, async () => {
     vi.spyOn(productService, `updateProduct`).mockReturnValue(Promise.resolve({} as DemoProduct))
     const store = useProductsStore()
     store.productToEdit = productToEdit
   
     const wrapper = mount(EditProduct, options)
+    const saveProductSpy = vi.spyOn(wrapper.vm, `saveProduct`)
     await wrapper.vm.$nextTick()
   
-    if (wrapper.vm.product) {
-      wrapper.vm.product.name = ``
-    }
+    wrapper.vm.name = ``
+    wrapper.vm.code = ``
+    wrapper.vm.description = ``
 
-    await wrapper.find(`[data-test-unit="productEditSaveBtn"]`).trigger(`click`)
+    await wrapper.vm.saveProduct()
+    await flushPromises()
   
-    expect(wrapper.vm.submitted).toBe(true)
+    expect(saveProductSpy).toHaveBeenCalled()
     expect(productService.updateProduct).not.toHaveBeenCalled()
+    expect(wrapper.vm.errors).toEqual({ 
+      code: `Code is required`, name: `Name is required`, description: `Description is required` 
+    })
   })
 })

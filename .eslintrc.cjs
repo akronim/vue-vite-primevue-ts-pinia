@@ -15,7 +15,7 @@ module.exports = {
     ecmaVersion: `latest`
   },
   ignorePatterns: [
-    `dist/`, `node_modules`
+    `dist/`, `node_modules`, `start.js`
   ],
   rules: {
     "object-curly-spacing": [`error`, `always`],
@@ -30,10 +30,11 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': `off`,
     '@typescript-eslint/ban-ts-comment': `off`,
     '@typescript-eslint/type-annotation-spacing': `warn`,
-    '@typescript-eslint/explicit-function-return-type': [`off`],
-    '@typescript-eslint/no-empty-function': [`off`],
-    '@typescript-eslint/explicit-module-boundary-types': [`off`],
+    '@typescript-eslint/explicit-function-return-type': [`error`],
+    '@typescript-eslint/no-empty-function': [`error`],
+    '@typescript-eslint/explicit-module-boundary-types': [`error`],
     "no-nested-ternary": `error`,
+    "max-lines-per-function": [`error`, { "max": 20, "skipBlankLines": true, "skipComments": true }],
     semi: [`error`, `never`],
     quotes: [
       `error`,
@@ -64,18 +65,15 @@ module.exports = {
     complexity: [
       `error`,
       {
-        "max": 15
+        "max": 10
       }
     ]
   },
   overrides: [
     {
-      // enable the rule specifically for TypeScript files
-      files: [`*.ts`, `*.mts`, `*.cts`, `*.tsx`],
+      files: [`*.vue`, `*.spec.ts`], 
       rules: {
-        '@typescript-eslint/explicit-function-return-type': `error`,
-        '@typescript-eslint/no-empty-function': [`error`],
-        '@typescript-eslint/explicit-module-boundary-types': [`warn`]
+        "max-lines-per-function": [`off`] 
       }
     }
   ]

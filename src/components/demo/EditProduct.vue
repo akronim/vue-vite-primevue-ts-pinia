@@ -8,34 +8,45 @@
         <label for="code">Code</label>
         <InputText
           id="code"
-          v-model="product.code"
+          v-model="code"
+          :class="{ 'p-invalid': errors.code }"
         />
+        <small
+          class="p-error"
+        >
+          {{ errors.code }}
+        </small>
       </div>
       <div class="field">
         <label for="name">Name</label>
         <InputText
           id="name"
-          v-model.trim="product.name"
+          v-model.trim="name"
           required="true"
           autofocus
-          :class="{ 'p-invalid': submitted && !product.name }"
+          :class="{ 'p-invalid': errors.name }"
         />
         <small
-          v-if="submitted && !product.name"
           class="p-error"
         >
-          Name is required.
+          {{ errors.name }}
         </small>
       </div>
       <div class="field">
         <label for="description">Description</label>
         <PvTextarea
           id="description"
-          v-model="product.description"
+          v-model="description"
           required="true"
           rows="3"
           cols="20"
+          :class="{ 'p-invalid': errors.description }"
         />
+        <small
+          class="p-error"
+        >
+          {{ errors.description }}
+        </small>
       </div>
       <div class="field">
         <label
@@ -142,6 +153,9 @@ import PvTextarea from 'primevue/textarea'
 import Dropdown from 'primevue/dropdown'
 import RadioButton from 'primevue/radiobutton'
 import { updateProduct } from '@/services/demo/demoProductService'
+import { useField, useForm } from "vee-validate"
+import { z } from 'zod'
+import { toTypedSchema } from "@vee-validate/zod"
 
 export default defineComponent({
   name: `EditProduct`,
@@ -158,24 +172,42 @@ export default defineComponent({
     const { getProductToEdit } = productsStore
     const product = ref<DemoProduct>()
     const { setShowFormEdit, fetchAllProducts } = productsStore
-    const submitted = ref(false)
     const statuses = ref([
       { label: `IN STOCK`, value: `IN STOCK` },
       { label: `LOW STOCK`, value: `LOW STOCK` },
       { label: `OUT OF STOCK`, value: `OUT OF STOCK` }
     ]) 
 
-    const saveProduct = async () => {
-      submitted.value = true
+    const validationSchema = toTypedSchema(z.object({
+      code: z.string().min(8, { message: `Code is required` }).max(15),
+      name: z.string().min(1, { message: `Name is required` }).max(20)
+        .refine((i) => !i.includes(`foo`), { message: `Name can not include 'foo'` }),
+      description: z.string().min(1, { message: `Description is required` }).max(60)
+    }))
 
-      if (product.value?.name?.trim()) {
+    const { errors, validate, resetForm } = useForm({ validationSchema })
+
+    const { value: code } = useField<string>(`code`)
+    const { value: name } = useField<string>(`name`)
+    const { value: description } = useField<string>(`description`)
+
+    const saveProduct = async (): Promise<void> => {
+      const isFormValid = (await validate()).valid
+
+      if (isFormValid && product.value) {
+        product.value.code = code.value 
+        product.value.name = name.value 
+        product.value.description = description.value 
+
         await updateProduct(product.value)
         await fetchAllProducts()
+
+        resetForm()
         hideForm()
       }
     }
 
-    const hideForm = () => {
+    const hideForm = (): void => {
       product.value = {} as DemoProduct
       setShowFormEdit(false)
     }
@@ -183,15 +215,21 @@ export default defineComponent({
     onMounted(() => {
       if (getProductToEdit) {
         product.value = getProductToEdit
+        code.value = getProductToEdit.code 
+        name.value = getProductToEdit.name 
+        description.value = getProductToEdit.description
       }
     })
 
     return {
       product,
       saveProduct,
-      submitted,
       hideForm,
-      statuses
+      statuses,
+      code,
+      name,
+      description,
+      errors
     }
   }
 })

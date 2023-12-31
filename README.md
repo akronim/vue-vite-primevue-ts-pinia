@@ -26,6 +26,10 @@ https://vitest.dev/guide/mocking.html
 ## pinia testing
 https://pinia.vuejs.org/cookbook/testing.html
 
+## validation
+https://vee-validate.logaretm.com/v4/
+https://zod.dev/
+
 
 ## Project Setup
 
@@ -77,7 +81,6 @@ https://github.com/orgs/primefaces/discussions
 
 
 ## TODO
-- vee-validate
 - date-fns
 - unplugin-vue-components => On-demand components auto importing for Vue
   - https://github.com/unplugin/unplugin-vue-components

@@ -205,17 +205,17 @@ export default defineComponent({
       console.log(`Old Value:`, oldValues?.length)
     })
 
-    const editProduct = async (product: DemoProduct) => {
+    const editProduct = async (product: DemoProduct): Promise<void> => {
       await fetchProductToEdit(product.id)
       setShowFormEdit(true)
     }
 
-    const confirmDeleteProduct = (product: DemoProduct) => {
+    const confirmDeleteProduct = (product: DemoProduct): void => {
       productToDelete.value = product
       deleteProductDialog.value = true
     }
 
-    const deleteProductItem = async () => {
+    const deleteProductItem = async (): Promise<void> => {
       deleteProductDialog.value = false
       await deleteProduct(productToDelete.value.id)
       await fetchAllProducts()
@@ -224,7 +224,7 @@ export default defineComponent({
       })
     }
 
-    const openNew = () => {
+    const openNew = (): void => {
       setShowFormNew(true)
     }
 

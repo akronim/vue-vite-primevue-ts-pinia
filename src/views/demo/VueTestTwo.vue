@@ -40,7 +40,7 @@ export default defineComponent({
     const toast = useToast()
     const count = ref(0)
 
-    const increaseCount = () => {
+    const increaseCount = (): void => {
       count.value++
 
       if (count.value === 3) {
