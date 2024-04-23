@@ -2,7 +2,8 @@ import { createRouter, createWebHistory, type RouteComponent, type RouteRecordRa
 
 export const RouteNames = {
   VUE_TEST_ONE: `vueTestOne`,
-  VUE_TEST_TWO: `vueTestTwo`
+  VUE_TEST_TWO: `vueTestTwo`,
+  VALIDATION_ONE: `validationOne`
 }
 
 export const routes: RouteRecordRaw[] = [
@@ -15,6 +16,11 @@ export const routes: RouteRecordRaw[] = [
     path: `/demo/vuetest/two`,
     name: RouteNames.VUE_TEST_TWO,
     component: (): Promise<RouteComponent> => import(`@/views/demo/VueTestTwo.vue`)
+  },
+  {
+    path: `/demo/validation/one`,
+    name: RouteNames.VALIDATION_ONE,
+    component: (): Promise<RouteComponent> => import(`@/views/demo/ValidationDemo.vue`)
   }
 ]
 
