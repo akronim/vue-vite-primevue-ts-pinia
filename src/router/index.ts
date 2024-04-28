@@ -20,7 +20,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: `/demo/validation/one`,
     name: RouteNames.VALIDATION_ONE,
-    component: (): Promise<RouteComponent> => import(`@/views/demo/ValidationDemo.vue`)
+    component: (): Promise<RouteComponent> => import(`@/views/demo/ValidationDemoOne.vue`)
   }
 ]
 

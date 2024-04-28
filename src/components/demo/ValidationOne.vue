@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <div>
     <div class="p-fluid">
       <label for="name">Name</label>
       <InputText
@@ -19,83 +19,85 @@
     </div>
 
     <div class="p-fluid">
-      <label for="description">Description</label>
-      <InputText
-        id="description"
-        v-model="description"
+      <label for="email">Age</label>
+      <InputNumber
+        id="age"
+        v-model="user.userData.age"
       />
-      <span class="text-danger">{{ descriptionError }}</span>
     </div>
 
-    <Button
-      type="submit"
-      label="Submit"
-      class="p-mt-2"
-    />
-  </form>
+    <TabView @tab-change="onTabChange">
+      <TabPanel
+        v-for="lang in languages"
+        :key="lang"
+        :header="lang"
+      >
+        <div class="p-fluid">
+          <label for="description">Description</label>
+          <InputText
+            id="description"
+            v-model="description"
+          />
+          <span class="text-danger">{{ descriptionError }}</span>
+        </div>
+      </TabPanel>
+    </TabView>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useField, useForm } from 'vee-validate'
-import { z } from 'zod'
+import { onMounted, ref, watch } from 'vue'
+import { useField, useForm, useSetFormValues } from 'vee-validate'
 import InputText from 'primevue/inputtext'
-import Button from 'primevue/button'
+import TabView, { type TabViewChangeEvent } from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
+import { useUserStore } from '@/stores'
+import { storeToRefs } from 'pinia'
+import { userSchema } from '@/validation/user'
 import { toTypedSchema } from '@vee-validate/zod'
+import InputNumber from 'primevue/inputnumber'
 
-interface User {
-  userData: {
-    name: string;
-    email: string;
-    localizedData: {
-      [key: string]: { description: string };
-    };
-  }
+const userStore = useUserStore()
+const { getUserToEdit: user } = storeToRefs(userStore)
+
+const languages = ref([`en`, `it`])
+const selectedLanguageIndex = ref(0)
+const language = ref(languages.value[selectedLanguageIndex.value])
+
+const validationSchema = toTypedSchema(userSchema)
+
+useForm({
+  validationSchema,
+  validateOnMount: true
+})
+
+const { value: name, errorMessage: nameError } = useField<string>(`name`)
+const { value: email, errorMessage: emailError } = useField<string>(`email`)
+const { value: description, errorMessage: descriptionError } = useField<string>(`description`)
+
+watch([name, email, description], ([newName, newEmail, newDescription]) => {
+  user.value.userData.name = newName
+  user.value.userData.email = newEmail
+  user.value.userData.localizedData[language.value].description = newDescription
+
+  console.log(user.value)
+})
+
+const onTabChange = (e: TabViewChangeEvent): void => {
+  selectedLanguageIndex.value = e.index
+  language.value = languages.value[selectedLanguageIndex.value]
+  description.value =
+    user.value.userData.localizedData[language.value].description
 }
 
-const props = defineProps({
-  lang: { type: String, required: true }
-})
+const setFormValues = useSetFormValues()
 
-const user = ref<User>({
-  userData: {
-    name: ``,
-    email: ``,
-    localizedData: {
-      en: { description: `` },
-      it: { description: `` }
-    }
-  }
-})
-
-const { handleSubmit } = useForm()
-
-const nameFieldSchema = toTypedSchema(
-  z.string().min(1, `Name is required`)
-)
-
-const emailFieldSchema = toTypedSchema(
-  z.string().email({ message: `Please enter a valid email` })
-)
-
-const descriptionFieldSchema = toTypedSchema(
-  z.string().min(1, `Description is required`)
-)
-
-const { value: name, errorMessage: nameError }
-  = useField<string>(`name`, nameFieldSchema, { initialValue: user.value.userData.name })
-const { value: email, errorMessage: emailError }
-  = useField<string>(`email`, emailFieldSchema, { initialValue: user.value.userData.email })
-const { value: description, errorMessage: descriptionError }
-  = useField<string>(`description`, descriptionFieldSchema, {
-    initialValue: user.value.userData.localizedData[props.lang].description
+onMounted(() => {
+  setFormValues({
+    name: user.value.userData.name,
+    email: user.value.userData.email,
+    description: user.value.userData.localizedData[language.value].description
   })
-
-const onSubmit = handleSubmit(() => {
-  user.value.userData.name = name.value
-  user.value.userData.email = email.value
-  user.value.userData.localizedData[props.lang].description = description.value
-  console.log(user.value)
 })
 </script>
 
